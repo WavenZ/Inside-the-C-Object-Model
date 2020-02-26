@@ -1185,5 +1185,4 @@ FooBar::FooBar( /* this pointer goes here */)
 
 
 
-[第 1 章 关于对象（Object Lessons）](Object_Lessons.md)
-[第 3 章 Data 语意学（The Semantics of Data）](The_Semantics_of_Data.md)
+[第 1 章 关于对象（Object Lessons）](Object_Lessons.md)|[第 3 章 Data 语意学（The Semantics of Data）](The_Semantics_of_Data.md)
