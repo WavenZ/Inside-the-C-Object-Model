@@ -61,7 +61,7 @@ C++ Standard 已经修改了 ARM 中的说法，虽然行为事实上仍然是�
 
 C++ Standard 然后开始一一叙述在什么样的情况下这个 implicit default constructor 会被视为 trivial。一个 nontrivial default constructor 在 ARM 的术语中就是编译器所需要的的那种，必要的话会有编译器合成出来。下面的四个小节分别探讨 nontrivial default constructor 的四种情况：
 
-### “带有Default Constructor”的Member Class Object
+### “带有 Default Constructor” 的 Member Class Object
 
 如果一个 class 没有任何 constructor，但它内含一个 member object，而后者有 default constructor，那么这个 class 的 implicit default constructor 就是 “nontrivial”，编译器需要为此 class 合成一个 default constructor。不过这个合成操作只有在 constructor 真正需要被调用时才会发生。
 
