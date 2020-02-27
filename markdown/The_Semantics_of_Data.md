@@ -1251,4 +1251,4 @@ pB.*bx
 ```
 额外的间接性会降低“把所有的处理都搬移到缓存器中执行”的优化能力。
 
-[第 2 章 构造函数语意学（The Semantics of Constructors）](/markdown/The_Semantics_of_Constructors.md)|[第 4 章 Function 语意学（The Semantics of Function）](/markdown/The_Semantics_of_Function.md)
+[第 2 章 构造函数语意学（The Semantics of Constructors）](The_Semantics_of_Constructors.md)|[第 4 章 Function 语意学（The Semantics of Function）](The_Semantics_of_Function.md)
