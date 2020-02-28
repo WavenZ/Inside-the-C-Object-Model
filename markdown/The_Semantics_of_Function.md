@@ -470,7 +470,7 @@ protected:
 ```
 virtual destructor 被复制为 slot1，而 mult() 被赋值 slot2. 此例并没有 mult() 的函数定义（译注：因为它是一个 pure virtual function）。所以 pure_virtual_called() 的函数地址会被放在 slot2 中。如果该函数意外地被调用，通常的操作时结束掉这个程序。y() 被赋值 slot3 而 z() 被赋值 slot4。 x() 的 slot 是多少？答案是没有，因为 x() 并非 virtual function。图 4.1 表示 Point 的内存布局和其 virtual table。
 
-<img src = '/graphs/4.1.png' width = '100%'>
+<img src = 'graphs/4.1.png' width = '100%'>
 
 图4.1 Virtual Table的布局：单一继承情况
 
@@ -667,7 +667,7 @@ vtbl_Base2_Derived; // 次要表格
 ```
 于是你将一个 Derived 对象地址指定给一个 Base1 指针或 Derived 指针时，将处理的 virtual table 是主要表格 vtbl_Derived。而当你将一个 Derived 对象地址指定给一个 Base2 指针时，被处理的 virtual table 是次要表格 vtbl_Base2_Derived。
 
-<img src = '/graphs/4.2.png' width = '100%'>
+<img src = 'graphs/4.2.png' width = '100%'>
 
 图4.2 Virtual Table的布局：多重继承情况。
 （译注：右下角的三个星号，就是下页的三种个情况）
@@ -742,7 +742,7 @@ protected:
 ```
 虽然 Point3d 有唯一一个（同时也是最左边的）base class，也就是 Point3d，但 Point3d 和 Point3d 的起始部分并不像 “非虚拟的单一继承” 情况那样一致。这种情况显示于图 4.3。由于 Point2d 和 Point3d 的对象不再相符，两者之间的转换也就需要调整 this 指针。至于在虚拟继承的情况下要消除 thunks，一般而言已经被证明是一项高难度技术。
 
-<img src = '/graphs/4.3.png'>
+<img src = 'graphs/4.3.png'>
 图 4.3 Virtual Table 布局：虚拟继承情况。（译注：我个人对于图右下的两个 vtbls 内容感到相当疑惑。至少，mumble() 应该是 Point2d::mumble() 而非 Point3d::mumble()）
 
 当一个 virtual base class 从另一个 virtual base class 派生而来，并且两者都支持 virtual functions 和 nonstatic data members 时，编译器对于 virtual base class 的支持简直就像进了迷宫一样。虽然我手上有一整柜带有答案的例程，并且有一个以上的算法可以决定适当的 offsets 以及各种调整，但这些素材实在太过诡谲迷离，不适合再此处讨论！我的建议是，不要在一个 virtual base class 中声明 nonstatic data members。如果这么做，你会距离复杂的深渊愈来愈近，终不可拔。
