@@ -462,7 +462,7 @@ Ber winnie = yogi;
 yogi 会被 default Bear constructor 初始化。而在 constructor 中，yogi 的 vptr被设定指向 Bear class 的 virtual table（靠编译器安插的码完成）。因此，把 yogi 的 vptr 指拷贝给 winnie 的 vptr 是安全的。
 
 译注：让我译下面这张图来补充说明yogi和winnie的关系：
-<img src = "/graphs/virtual_table_for_Bear.png" width = '80%'>
+<img src = "graphs/virtual_table_for_Bear.png" width = '80%'>
 
 当一个 base class object 以其 derived class 的 object内容做初始化操作时，其 vptr 复制操作也必须保证安全，例如：
 ```cpp
@@ -483,7 +483,7 @@ void foo(){
 [5] 通过 franny 调用 virtual function draw()，调用的是 ZooAnimal 实体而非 Bear 实体（甚至虽然 franny 是以 Bear object yogi 作为初值），因为 franny 是一个 ZooZnimal object。事实上，yogi 中的 Bear 部分已经在 franny 初始化时被切割掉了。如果 franny 被声明为一个 refernnce（或如果它是一个指针，而其值为 yogi 的地址），那么经由 franny 所调用的 draw() 才会是 Bear 的函数实体。这已在 1.3 节讨论过。
 
 译注：让我再以下面这张图来补充说明yogi和franny的关系：
-<img src = "/graphs/franny.png" width = "80%">
+<img src = "graphs/franny.png" width = "80%">
 
 也就是说，合成出来的ZooAnimal copy constructor会明确设定object的vptr指向ZooAnimal class的virtual table，而不是直接从右手边的class object中将其vptr现值拷贝过来。
 
@@ -535,7 +535,7 @@ Raccoon little_critter = little_red;
 
 译注：让我以下面这张图来补充说明 little_red 和 little_criter 的关系：
 
-<img src = "/graphs/little_red.png" width = "%80">
+<img src = "graphs/little_red.png" width = "%80">
 
 在下面的情况中，编译器无法知道是否 “bitwise copy semantics” 还保持着，因为它无法知道（没有流程分析）Raccoon 指针是否指向一个真正的 Raccoon object，或是指向一个 derived class object:
 ```cpp

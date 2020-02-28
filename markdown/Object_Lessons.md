@@ -187,7 +187,7 @@ protected:
 
 我们的第一个模型十分简单。它可能是为了尽量减低 C++ 编译器的设计复杂度而开发出来的，赔上的则是空间和执行器的效率。在这个简单模型中，一个 object 是一系列的slots，每一个 slot 指向一个 members。Members 按其声明次序，各被指定一个 slot。每一个 data member 或 function member 都有自己的一个 slot。图 1.1 可以说明这种模型。
 
-<img src = '/graphs/1.1.png' width = '50%'>
+<img src = 'graphs/1.1.png' width = '50%'>
 
 图 1.1 简单对象模型（Simple Object Model)
 
@@ -199,7 +199,7 @@ protected:
 
 为了对所有 class 的所有 objects 都有一致表达方式，另一种对象模型是把所有与 members 相关的信息抽出来，放在一个 data member table 和一个 member function table 之中，class object 本身则内含指向这两个表格的指针。Member function table 是一系列的 slots，每一个 slot 指出一个 member function；Data member table 则直接含有data 本身，如图 1.2 所示。
 
-<img src = '/graphs/1.2.png' width = '60%'>
+<img src = 'graphs/1.2.png' width = '60%'>
 
 图 1.2 Member Table 对象模型（Member Table Object Model）
 
@@ -214,7 +214,7 @@ Stroustrup 当初设计（当前亦仍占有优势）的 C++ 对象模型是从�
 1. 每一个class产生出一堆指向 virtual functions 的指针，放在表格之中。这个表格被称为 virtual table (**vtbl**)。
 2. 每一个 class object 被添加了一个指针，指向相关的 virtual table。通常这个指针被称为 **vptr**。vptr 的设定（setting）和重置（resetting）都由每一个 class 的 constructor、destructor 和 copy assignment 运算符自动完成（我将在第 5 章讨论）。每一个 class 所关联的 type_info object（用以支持runtime idenrification, RTTI）也经由 virtual table 被指出来，通常是放在表格的第一个 slot 处。
 
-<img src = '/graphs/1.3.png' width = '80%'>
+<img src = 'graphs/1.3.png' width = '80%'>
 
 图 1.3 C++对象模型（C++ Object Model）
 
@@ -247,7 +247,7 @@ class ostream : virtual public ios { ... };
 当然啦，你也可以想象另一种所谓的 base table 模型。这里所说的 base class table 被产生出来时，表格中的每一个 slot 内含一个相关的 base class 地址，这很像 virtual table 内含每一个 virtual function 的地址一样。每一个 class object 内含一个 bptr，它会被初始化，指向其 base class table。这种策略的主要缺点是由于间接性而导致的空间和存取时间上的额外负担，优点则是在每一个 class object 中对于继承都有一致的表现：每一个 class object 都应该在某个固定位置上安放一个 base table 指针，与 base class 的大小或数目无关。第二个优点是，不需要改变 class objects 本身，就可以放大、缩小、或更改 base class table.
 
 译注：我以下图表现 base class table 模型在虚拟多重继承中的应用（以稍早的 iostream 为例）：
-<img src = '/graphs/base_class_table_虚拟多重继承.png' width = '99%'>
+<img src = 'graphs/base_class_table_虚拟多重继承.png' width = '99%'>
 
 不管上述哪一种体制，“间接性”的级数都将因为继承的深度而增加。例如，一个 Rental_book 需要两次间接存取才能够探取到继承自 Library_materials 的 members，而 Book 只需要一次。如果在 derived class 内复制一个指针，指向继承串链中的每一个 base class，倒是可以获得一个永远不变的存取时间。当然这必须付出代价，因为需要额外的空间来放置额外的指针。
 
@@ -309,7 +309,7 @@ void foobar(X &_result)
 喔，真是差异颇大，不是吗！当然，此刻你并不需要了解所有的转化过程及结果。我会在后续章节解释其中每一步操作的用意，以及为什么那么做。我想你会回头看，一边玩弄你的手指头，一边说“喔欧，使得，当然”，同时奇怪你怎么会曾经迷惘过。
 
 译注：我可以先用这张图解除你的部分疑惑。由于 X 有两个 virtual functions，一个是 destructor，一个是 foo，所以 X object 布局如下：
-<img src = '/graphs/X_class_object.png' width = '80%'>
+<img src = 'graphs/X_class_object.png' width = '80%'>
 
 前述程序代码中的`px->_vtbl[0]`指向 X 的 type_info object，`px->_vtbl[1]`指向`X::~X()`，`px->_vtbl[2]`指向`X::foo()`。
 
@@ -637,7 +637,7 @@ ZooAnimal *pza = &za;
 ```
 其中，class object za 和指针 pza 的可能布局如图 1.4 所示，我将在第 3 章再回到“data members 的布局”这个主题上。
 
-<img src = '/graphs/1.4.png' width = '60%'>
+<img src = 'graphs/1.4.png' width = '60%'>
 
 图 1.4 独立（非派生）class的object布局和pointer布局
 
@@ -685,7 +685,7 @@ Bear &rb = *pb;
 ```
 b、pb、rb会有怎样的内存需求呢？不管是 pointer 或 refernce 都只需要一个 word 的空间（在 32 位机器上是 4-bytes）。Bear object 需要 24 bytes，也就是 ZooAnimal的 16 bytes 加上 Bear 所带来的 8 bytes。图 1.5 展示可能的内存布局：
 
-<img src = '/graphs/1.5.png' width = '60%'>
+<img src = 'graphs/1.5.png' width = '60%'>
 
 图 1.5 Derived class 的 object 和 pointer 布局
 
@@ -749,7 +749,7 @@ pz->rotate();
 ```
 其可能的内存布局如图1.6所示.
 
-<img src = '/graphs/1.6.png' width = '60%'>
+<img src = 'graphs/1.6.png' width = '60%'>
 
 图 1.6 依次得到的内存布局
 
