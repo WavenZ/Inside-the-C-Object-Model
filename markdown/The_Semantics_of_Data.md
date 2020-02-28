@@ -10,7 +10,7 @@ class A : public Y, public Z { };
 
 译注：X,Y,Z,A 的继承关系如下图所示:
 
-<img src = 'xyza.png' width = '30%'>
+<img src = '/graphs/xyza.png' width = '30%'>
 
 上述 X,Y,Z,A 中没有任何一个 class 内含明显的数据，其间只表示了继承关系。所以发现者认为每一个 class 的大小都应该是 0.当然不对！即使是 class X 的大小也不为 0：
 ```cpp
@@ -58,12 +58,12 @@ class Z : public virtual X {};
 译注：alignment 就是将数值调整到某数的整数倍。在 32 位计算机上，通常 alignment 位 4 bytes（32 位），以使 bus 的 “运输量” 达到最高效率。
 
 译注：我以下图表现上述的 X，Y，Z 对象布局：
-<img src = 'empty.png' width = '80%'>
+<img src = '/graphs/empty.png' width = '80%'>
 
 Empty virtual base class 已经成为 C++ OO 设计的一个特有术语了。它提供一个 virtual interface, 没有任何数据。某些新近的编译器（译注）对此提供了特殊处理（请看 [SUN94a]）.在这个策略之下，一个 empty virtual base class 被视为 derived class object 最开头的一部分，也就是说它并没有花费任何的额外空间。这就节省了上述第 2 点的 1 byte（译注：因为既然有了 members，就不需要原本为了 empty class 而安插的一个 char），也就不需要第 3 点所说的 3 bytes的填补。只剩下第一点所说的额外负担。在此模型下，Y 和 Z 的大小都是 4 而不是 8.
 
 译注：Visual C++ 就是上述这一类型的编译器。我以下图来表现 Visual C++ 对于 class X, Y, Z 的对象布局：
-<img src = 'vc.png' width = '80%'>
+<img src = '/graphs/vc.png' width = '80%'>
 
 编译器之间的潜在差异正说明了 C++ 对象模型的演化。这个模型为一般情况提供了解决之道。当特殊情况逐渐被挖掘出来时，种种启发（尝试错误）法于是被引入，提供优化的处理。如果成功，启发法于是就提升为普遍的策略，并跨越各种编译器而合并。它被视为标准（虽然它并不被规范为标准），久而久之也就成了语言的一部分。Virtual function table 就是一个好例子，另一个例子是第 2 章讨论过的 “named return value(NRV) 优化”。
 
@@ -383,7 +383,7 @@ private:
 ```
 这和 “提供两层或三层继承结构，每一层（代表一个维度）是一个 class，派生自较低维层次” 有什么不同？下面各小节的讨论将涵盖 “单一继承且不含 virtual functions”、“单一继承并含 virtual functions”、“多重继承”、“虚拟继承” 等四种情况。图 3.1a 就是 Point2d 和 Point3d 的对象布局图，在没有 virtual functions 的情况下（如本例），它们和 C struct 完全一样。
 
-<img src = '3.1a.png' width = '60%'>
+<img src = '/graphs/3.1a.png' width = '60%'>
 
 图 3.1a 个别 structs 的数据布局
 
@@ -429,7 +429,7 @@ protected:
 ```
 这样设计的好处就是可以把管理 x 和 y 坐标的程序代码局部化，此外这个设计可以明显表现出两个抽象类之间的紧密关系。当这两个 classes 独立的时候，Point2d object 和 Point3d object 的声明和使用都不会有所改变。所以这两个抽象类的使用者不需要知道objects 是否为独立的 classes 类型，或是彼此之间有继承的关系。如 3.1b 显示 Point2d 和 Point3d 继承关系的实物布局，其间并没有声明 virtual 接口。
 
-<img src = '3.1b.png' width = '80%'>
+<img src = '/graphs/3.1b.png' width = '80%'>
 
 图 3.1b 单一继承而且没有 virtual function 时的数据布局
 
@@ -491,7 +491,7 @@ Concrete1 内含两个 members：val 和 bit1，加起来是 5 bytes，而一个
 “真是愚蠢”，我们那位纯真小甜甜这么说。许多读者以电子邮件、电话或是用嘴巴也对我这么说。你可了解为什么这个语言有这样的行为？
 
 译注：下图可说明 Concrete1、Concrete2、Concrete3 的对象布局
-<img src = 'concrete.png' width = '80%'>
+<img src = '/graphs/concrete.png' width = '80%'>
 
 让我们声明以下一组指针：
 ```cpp
@@ -516,11 +516,11 @@ pc1_1 = pc2;    // 译注：令pc1_1指向Concrete2对象
 
 译注：让我以图形解释。如果 “base class subobject 在 derived class 中的原样性”受到破坏，也就是说，编译器把 base clas object 原本的填补空间让出来给 derived class members 使用，像这样：
 
-<img src = 'concrete1.png' width = '80%'>
+<img src = '/graphs/concrete1.png' width = '80%'>
 
 那么当发生 Concrete1 subobject 的复制操作时，就会破坏 Concrete2 members。
 
-<img src = 'concrete2.png' width = '80%'>
+<img src = '/graphs/concrete2.png' width = '80%'>
 
 ### 加上多态（Adding Polymorphism）
 
@@ -617,7 +617,7 @@ private:
 no_virts *p = new has_virts;
 ```
 
-<img src = 'virts.png' width = '80%'>
+<img src = '/graphs/virts.png' width = '80%'>
 
 图 3.2a Vptr 被放在 class 的尾端
 
@@ -625,7 +625,7 @@ no_virts *p = new has_virts;
 
 到了 C++2.0，开始支持虚拟继承以及抽象基类，并且由于面向对象典范（OO paradigm）的兴起，某些编译器开始把 vptr 放到 class object 的起头处（例如 Martin O'Riordan, 他领导 Microsoft 的第一个 C++ 编译器产品，就十分主张这种做法）。请看图 3.2b 的图解说明。
 
-<img src = 'virts1.png' width = '80%'>
+<img src = '/graphs/virts1.png' width = '80%'>
 
 图 3.2b Vptr 放在 class 的前端
 
@@ -633,7 +633,7 @@ no_virts *p = new has_virts;
 
 图 3.3 显示 Point2d 和 Point3d 加上了 virtual function 之后的继承布局。注意此图是把 vptr 放在 base class 的尾端。
 
-<img src = 'point_virtual_func.png' width = '80%'>
+<img src = '/graphs/point_virtual_func.png' width = '80%'>
 
 图3.3 单一继承并含虚拟函数情况下的数据布局
 
@@ -684,7 +684,7 @@ protected:
 ```
 译注：至此，Point2d、Point3d、Vertex、Vertex3d的继承关系如下：
 
-<img src = 'vertex3d.png' width = '40%'>
+<img src = '/graphs/vertex3d.png' width = '40%'>
 
 多重继承的问题主要发生于 derived class objects 和其第二或后继的 base class objects 之间的转换；不论是直接转换如下：
 ```cpp
@@ -740,7 +740,7 @@ pv = pv3d
 ```
 至于 reference，则不需要针对可能的 0 值做防卫，因为 reference 不可能参考到“无物”（no object）。
 
-<img src = 'vertex3d1.png' width = '80%'>
+<img src = '/graphs/vertex3d1.png' width = '80%'>
 
 图3.4 数据布局:多重继承（Multiple Inheritance）
 
@@ -765,7 +765,7 @@ class iostream :
 ```
 译注：下图可表现iostream的继承体系图，左为多重继承，右为虚拟多重继承。
 
-<img src = 'iostream.png' width = '80%'>
+<img src = '/graphs/iostream.png' width = '80%'>
 
 不论是 istream 或 ostream 都内含一个 ios subobject，然而在 iostream 的对象布局中，我们只需要单一一份 ios subobject 就好。语言层面的解决方法是导入所谓的虚拟继承：
 
@@ -815,7 +815,7 @@ protected:
 
 译注：下图可表现 Point2d、Point3d、Vertex、Vertex3d 的继承体系：
 
-<img src = 'vertex3d2.png' width = '60%'>   
+<img src = '/graphs/vertex3d2.png' width = '60%'>   
 
 一般的布局策略是先安排好 derived class 的不变部分，然后再建立其共享部分。
 
@@ -857,7 +857,7 @@ MetaWare 和其它编译器到今天仍然使用 cfront 的原始实现模型来
 
 至于第一个问题，一般而言有两个解决方法。Microsoft 编译器引入所谓的 virtual base class table。每一个 class object 如果有一个或多个 virtual base classes，就会由编译器安插一个指针，指向 virtual base class table。至于真正的virtual base class 指针，当然是放在该表格中。虽然此法已行之有年，但我并不知道是否有其它任何编译器使用此法。说不定 Microsoft 对此法提出专利，以至别人不能使用它。
 
-<img src = 'vertex3d3.png' width = '100%'>
+<img src = '/graphs/vertex3d3.png' width = '100%'>
 
 图 3.5a 虚拟继承，使用 Pointer Strategy 所产生的数据布局（译注：原书图 3.5a 把Vertex 写为 Vertex2d，与书中程序代码不符，所以我全部改为 Vertex）
 
@@ -895,7 +895,7 @@ origin._x;
 
 一般而言，virtual base class 最有效的一种运用形式就是：一个抽象的 virtual base class，没有任何 data members。
 
-<img src = 'vertex3d4.png' width = '80%'>
+<img src = '/graphs/vertex3d4.png' width = '80%'>
 
 图 3.5b 虚拟继承，使用 Virtual Table Offset Strategy 所产生的数据布局（译注：原书图 3.5b 把 Vertex 写为 Vertex2d，与书中程序代码不符，所以我全部改为 Vertex）
 
